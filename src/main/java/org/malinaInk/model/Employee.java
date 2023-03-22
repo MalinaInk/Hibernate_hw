@@ -10,6 +10,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+
     @Column(name = "id")
     private int employeeId;
     @Column(name = "first_name")
@@ -20,27 +21,29 @@ public class Employee {
     private String gender;
     @Column(name = "age")
     private int ageOfEmployee;
-    @Column(name = "city_id")
-    private int cityId;
+
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name="city_id", nullable=false)
+    private City city;
 
     public Employee() {
     }
 
-    public Employee(String employeeFirstName, String employeeLastName, String gender, int ageOfEmployee, int cityId) {
+    public Employee(String employeeFirstName, String employeeLastName, String gender, int ageOfEmployee, City city) {
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
         this.gender = gender;
         this.ageOfEmployee = ageOfEmployee;
-        this.cityId = cityId;
+        this.city = city;
     }
 
-    public Employee(int employeeId, String employeeFirstName, String employeeLastName, String gender, int ageOfEmployee, int cityId) {
+    public Employee(int employeeId, String employeeFirstName, String employeeLastName, String gender, int ageOfEmployee, City city) {
         this.employeeId = employeeId;
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
         this.gender = gender;
         this.ageOfEmployee = ageOfEmployee;
-        this.cityId = cityId;
+        this.city = city;
     }
 
     public int getEmployeeId() {
@@ -83,25 +86,25 @@ public class Employee {
         this.ageOfEmployee = ageOfEmployee;
     }
 
-    public int getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        org.malinaInk.model.Employee employee = (org.malinaInk.model.Employee) o;
-        return employeeId == employee.employeeId && ageOfEmployee == employee.ageOfEmployee && cityId == employee.cityId && Objects.equals(employeeFirstName, employee.employeeFirstName) && Objects.equals(employeeLastName, employee.employeeLastName) && Objects.equals(gender, employee.gender);
+        Employee employee = (Employee) o;
+        return employeeId == employee.employeeId && ageOfEmployee == employee.ageOfEmployee && Objects.equals(employeeFirstName, employee.employeeFirstName) && Objects.equals(employeeLastName, employee.employeeLastName) && Objects.equals(gender, employee.gender) && Objects.equals(city, employee.city);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeId, employeeFirstName, employeeLastName, gender, ageOfEmployee, cityId);
+        return Objects.hash(employeeId, employeeFirstName, employeeLastName, gender, ageOfEmployee, city);
     }
 
     @Override
@@ -112,7 +115,7 @@ public class Employee {
                 ", employeeLastName='" + employeeLastName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", ageOfEmployee=" + ageOfEmployee +
-                ", cityId=" + cityId +
+                ", city=" + city +
                 '}';
     }
 }

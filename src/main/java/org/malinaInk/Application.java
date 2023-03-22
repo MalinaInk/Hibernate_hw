@@ -2,6 +2,7 @@ package org.malinaInk;
 
 import org.malinaInk.Service.EmployeeDAO;
 import org.malinaInk.Service.impl.EmployeeDAOImpl;
+import org.malinaInk.model.City;
 import org.malinaInk.model.Employee;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,7 +13,9 @@ public class Application {
 
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
-        Employee employee1 = new Employee("Lidia", "Zvereva", "female", 37, 4);
+        City city7 = new City();
+
+        Employee employee1 = new Employee("Lidia", "Zvereva", "female", 37, city7);
         employeeDAO.create(employee1);
 
         System.out.println(employeeDAO.readById(5));
@@ -23,10 +26,10 @@ public class Application {
             System.out.println(employee);
         }
 
-        Employee employee2 = new Employee("Ivan", "Milkovsky", "male", 29, 3);
+        Employee employee2 = new Employee("Ivan", "Milkovsky", "male", 29, city7);
 
         employeeDAO.updateEmployee(employee2);
-
         employeeDAO.delete(employee2);
     }
 }
+
